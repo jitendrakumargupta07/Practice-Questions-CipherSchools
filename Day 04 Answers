@@ -1,0 +1,83 @@
+//ANSWER 1
+#include <iostream>
+using namespace std;
+
+int main() {
+    int num1, num2;
+
+    cout << "Enter first integer: ";
+    cin >> num1;
+
+    cout << "Enter second integer: ";
+    cin >> num2;
+
+    cout << "Addition: " << num1 + num2 << endl;
+    cout << "Subtraction: " << num1 - num2 << endl;
+    cout << "Multiplication: " << num1 * num2 << endl;
+
+    if (num2 != 0) {
+        cout << "Division: " << static_cast<double>(num1) / num2 << endl;
+        cout << "Modulus: " << num1 % num2 << endl;
+    } else {
+        cout << "Division: Cannot divide by zero" << endl;
+        cout << "Modulus: Cannot divide by zero" << endl;
+    }
+
+    return 0;
+}
+
+
+//ANSWER 2
+#include <iostream>
+using namespace std;
+
+class Complex {
+public:
+    int real;
+    int imaginary;
+
+    Complex(int r = 0, int i = 0) : real(r), imaginary(i) {}
+
+    // Overload the + operator
+    Complex operator + (const Complex& obj) {
+        Complex result;
+        result.real = real + obj.real;
+        result.imaginary = imaginary + obj.imaginary;
+        return result;
+    }
+
+    // Overload the - operator
+    Complex operator - (const Complex& obj) {
+        Complex result;
+        result.real = real - obj.real;
+        result.imaginary = imaginary - obj.imaginary;
+        return result;
+    }
+
+    // Display the complex number
+    void display() {
+        cout << real << " + " << imaginary << "i" << endl;
+    }
+};
+
+int main() {
+    Complex num1(3, 4);
+    Complex num2(1, 2);
+
+    Complex sum = num1 + num2;
+    Complex difference = num1 - num2;
+
+    cout << "Complex Number 1: ";
+    num1.display();
+
+    cout << "Complex Number 2: ";
+    num2.display();
+
+    cout << "Sum: ";
+    sum.display();
+
+    cout << "Difference: ";
+    difference.display();
+
+    return 0;
+}

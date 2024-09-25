@@ -1,0 +1,61 @@
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+void insertInSortedOrder(Node*& head, int value) {
+    Node* newNode = new Node{value, nullptr};
+    
+    if (head == nullptr || head->data >= value) {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+    
+    Node* current = head;
+    while (current->next != nullptr && current->next->data < value) {
+        current = current->next;
+    }
+    
+    newNode->next = current->next;
+    current->next = newNode;
+}
+
+void printList(Node* head) {
+    Node* current = head;
+    while (current != nullptr) {
+        std::cout << current->data;
+        if (current->next != nullptr) {
+            std::cout << "->";
+        }
+        current = current->next;
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    Node* head = nullptr;
+    int n, value;
+
+    std::cout << "Enter number of elements in the sorted linked list: ";
+    std::cin >> n;
+
+    std::cout << "Enter elements in sorted order: ";
+    for (int i = 0; i < n; i++) {
+        int data;
+        std::cin >> data;
+        insertInSortedOrder(head, data);
+    }
+
+    std::cout << "Enter the value to insert: ";
+    std::cin >> value;
+    
+    insertInSortedOrder(head, value);
+    
+    std::cout << "Updated linked list: ";
+    printList(head);
+    
+    return 0;
+}

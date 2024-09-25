@@ -1,0 +1,58 @@
+Answer 1
+
+#include <iostream>
+#include <string>
+
+class Car {
+public:
+    std::string brandName;
+    std::string model;
+    std::string engine;
+    int numberOfSeats;
+
+    void displayInfo() {
+        std::cout << "Brand Name: " << brandName << std::endl;
+        std::cout << "Model: " << model << std::endl;
+        std::cout << "Engine: " << engine << std::endl;
+        std::cout << "Number of Seats: " << numberOfSeats << std::endl;
+    }
+};
+
+int main() {
+    Car myCar;
+    myCar.brandName = "Toyota";
+    myCar.model = "Camry";
+    myCar.engine = "2.5L I4";
+    myCar.numberOfSeats = 5;
+    myCar.displayInfo();
+    return 0;
+}
+
+
+Answer 2
+
+#include <iostream>
+
+class Rectangle {
+public:
+    int width;
+    int height;
+
+    Rectangle(int w, int h) : width(w), height(h) {}
+
+    Rectangle(const Rectangle &rect) {
+        width = rect.width;
+        height = rect.height;
+    }
+
+    void displayArea() {
+        std::cout << "Area: " << width * height << std::endl;
+    }
+};
+
+int main() {
+    Rectangle rect1(10, 5);
+    Rectangle rect2 = rect1;
+    rect2.displayArea();
+    return 0;
+}

@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <tuple>
+
+class Person {
+public:
+    std::string firstName;
+    std::string lastName;
+    int age;
+
+    Person(const std::string& fName, const std::string& lName, int a)
+        : firstName(fName), lastName(lName), age(a) {}
+
+    std::string getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    std::tuple<std::string, std::string, int> getDetails() {
+        return std::make_tuple(firstName, lastName, age);
+    }
+};
+
+int main() {
+    Person person("John", "Doe", 30);
+    std::cout << "Full Name: " << person.getFullName() << std::endl;
+
+    auto [fName, lName, age] = person.getDetails();
+    std::cout << "First Name: " << fName << ", Last Name: " << lName << ", Age: " << age << std::endl;
+
+    return 0;
+}

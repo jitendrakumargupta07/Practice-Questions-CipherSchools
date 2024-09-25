@@ -1,0 +1,67 @@
+Answer 1
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+int main() {
+    std::string name, email;
+    int age;
+
+    std::cout << "Enter your name: ";
+    std::getline(std::cin, name);
+    std::cout << "Enter your age: ";
+    std::cin >> age;
+    std::cin.ignore(); // to ignore the newline character left in the input buffer
+    std::cout << "Enter your email: ";
+    std::getline(std::cin, email);
+
+    std::ofstream outFile("details.txt");
+    if (outFile.is_open()) {
+        outFile << "Name: " << name << "\n";
+        outFile << "Age: " << age << "\n";
+        outFile << "Email: " << email << "\n";
+        outFile.close();
+    } else {
+        std::cout << "Unable to open file for writing." << std::endl;
+    }
+
+    std::ifstream inFile("details.txt");
+    std::string line;
+    if (inFile.is_open()) {
+        while (getline(inFile, line)) {
+            std::cout << line << std::endl;
+        }
+        inFile.close();
+    } else {
+        std::cout << "Unable to open file for reading." << std::endl;
+    }
+
+    return 0;
+}
+
+
+Answer 2
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+int main() {
+    std::string filename;
+    std::cout << "Enter the name of the text file to read: ";
+    std::getline(std::cin, filename);
+
+    std::ifstream inFile(filename);
+    std::string line;
+    if (inFile.is_open()) {
+        while (getline(inFile, line)) {
+            std::cout << line << std::endl;
+        }
+        inFile.close();
+    } else {
+        std::cout << "Unable to open file." << std::endl;
+    }
+
+    return 0;
+}

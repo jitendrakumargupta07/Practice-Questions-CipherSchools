@@ -1,0 +1,107 @@
+Answer 1
+
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+class DoublyLinkedList {
+public:
+    Node* head;
+
+    DoublyLinkedList() : head(nullptr) {}
+
+    void insertAtPosition(int position, int value) {
+        Node* newNode = new Node{value, nullptr, nullptr};
+        if (position == 0) {
+            newNode->next = head;
+            if (head != nullptr) {
+                head->prev = newNode;
+            }
+            head = newNode;
+            return;
+        }
+
+        Node* current = head;
+        for (int i = 0; i < position - 1 && current != nullptr; i++) {
+            current = current->next;
+        }
+
+        if (current == nullptr) return;
+
+        newNode->next = current->next;
+        newNode->prev = current;
+
+        if (current->next != nullptr) {
+            current->next->prev = newNode;
+        }
+        current->next = newNode;
+    }
+
+    void printList() {
+        Node* current = head;
+        while (current != nullptr) {
+            std::cout << current->data << " ";
+            current = current->next;
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    DoublyLinkedList dll;
+    dll.insertAtPosition(0, 2);
+    dll.insertAtPosition(1, 4);
+    dll.insertAtPosition(2, 5);
+
+    int p = 2, x = 6;
+    dll.insertAtPosition(p + 1, x);  // Insert after position p (0-based)
+    dll.printList();  // Output: 2 4 5 6
+
+    return 0;
+}
+
+
+Answer 2
+
+#include <iostream>
+#include <unordered_set>
+
+struct ListNode {
+    int data;
+    ListNode* next;
+    ListNode(int x) : data(x), next(nullptr) {}
+};
+
+bool hasCycle(ListNode* head) {
+    std::unordered_set<ListNode*> visited;
+    ListNode* current = head;
+
+    while (current != nullptr) {
+        if (visited.find(current) != visited.end()) {
+            return true;
+        }
+        visited.insert(current);
+        current = current->next;
+    }
+    return false;
+}
+
+int main() {
+    ListNode* head = new ListNode(3);
+    head->next = new ListNode(2);
+    head->next->next = new ListNode(0);
+    head->next->next->next = new ListNode(-4);
+    head->next->next->next->next = head->next;  // Create a cycle
+
+    if (hasCycle(head)) {
+        std::cout << "true" << std::endl;  // Output: true
+    } else {
+        std::cout << "false" << std::endl;
+    }
+
+    return 0;
+}

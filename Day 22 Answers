@@ -1,0 +1,125 @@
+Answer 1
+
+#include <iostream>
+#define MAX 100
+
+class Stack {
+private:
+    int arr[MAX];
+    int top;
+
+public:
+    Stack() : top(-1) {}
+
+    void push(int x) {
+        if (top >= MAX - 1) {
+            std::cout << "Stack Overflow" << std::endl;
+            return;
+        }
+        arr[++top] = x;
+    }
+
+    void pop() {
+        if (top < 0) {
+            std::cout << "Stack Underflow" << std::endl;
+            return;
+        }
+        top--;
+    }
+
+    int peek() {
+        if (top < 0) {
+            std::cout << "Stack is empty" << std::endl;
+            return -1;
+        }
+        return arr[top];
+    }
+
+    bool isEmpty() {
+        return top < 0;
+    }
+};
+
+int main() {
+    Stack stack;
+
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+    stack.push(4);
+    stack.push(5);
+
+    std::cout << "Top element is: " << stack.peek() << std::endl;
+
+    return 0;
+}
+
+
+Answer 2
+
+#include <iostream>
+#define MAX 100
+
+class Stack {
+private:
+    int arr[MAX];
+    int top;
+
+public:
+    Stack() : top(-1) {}
+
+    void push(int x) {
+        if (top >= MAX - 1) {
+            std::cout << "Stack Overflow" << std::endl;
+            return;
+        }
+        arr[++top] = x;
+    }
+
+    void pop() {
+        if (top < 0) {
+            std::cout << "Stack Underflow" << std::endl;
+            return;
+        }
+        top--;
+    }
+
+    int peek() {
+        if (top < 0) {
+            std::cout << "Stack is empty" << std::endl;
+            return -1;
+        }
+        return arr[top];
+    }
+
+    bool isEmpty() {
+        return top < 0;
+    }
+};
+
+int main() {
+    Stack stack;
+    int n;
+
+    std::cout << "Enter the number of elements: ";
+    std::cin >> n;
+
+    std::cout << "Enter " << n << " values: ";
+    for (int i = 0; i < n; i++) {
+        int value;
+        std::cin >> value;
+        stack.push(value);
+    }
+
+    std::cout << "Popped values: ";
+    while (!stack.isEmpty()) {
+        std::cout << stack.peek();
+        stack.pop();
+        if (!stack.isEmpty()) {
+            std::cout << ", ";
+        }
+    }
+    std::cout << std::endl;
+
+    return 0;
+}

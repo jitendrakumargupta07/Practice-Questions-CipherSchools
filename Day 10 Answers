@@ -1,0 +1,48 @@
+Answer 1
+
+#include <iostream>
+
+int findMax(const int arr[], int size) {
+    int max = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+int main() {
+    int arr1[] = {1, 5, 3, 9, 2};
+    int arr2[] = {10, 20, 5, 40, 15};
+    std::cout << "Max value in arr1: " << findMax(arr1, 5) << std::endl;
+    std::cout << "Max value in arr2: " << findMax(arr2, 5) << std::endl;
+    return 0;
+}
+
+
+Answer 2
+
+#include <iostream>
+#include <cctype>
+#include <algorithm>
+
+bool isPalindrome(const std::string &str) {
+    std::string cleaned;
+    for (char c : str) {
+        if (std::isalnum(c)) {
+            cleaned += std::tolower(c);
+        }
+    }
+    std::string reversed = cleaned;
+    std::reverse(reversed.begin(), reversed.end());
+    return cleaned == reversed;
+}
+
+int main() {
+    std::string str1 = "A man, a plan, a canal, Panama";
+    std::string str2 = "Hello, World!";
+    std::cout << "Is str1 a palindrome? " << (isPalindrome(str1) ? "Yes" : "No") << std::endl;
+    std::cout << "Is str2 a palindrome? " << (isPalindrome(str2) ? "Yes" : "No") << std::endl;
+    return 0;
+}

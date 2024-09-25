@@ -1,0 +1,38 @@
+Answer 1
+
+#include <iostream>
+
+int main() {
+    int num = 42;
+    int *ptr = &num;
+    std::cout << "Value using variable: " << num << std::endl;
+    std::cout << "Value using pointer: " << *ptr << std::endl;
+    return 0;
+}
+
+Answer 2
+
+#include <iostream>
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *ptr = arr;
+    for (int i = 0; i < 5; i++) {
+        std::cout << *(ptr + i) << std::endl;
+    }
+    return 0;
+}
+
+Answer 3
+
+#include <iostream>
+
+int main() {
+    int num = 50;
+    int *ptr = &num;
+    int **ptr2 = &ptr;
+    std::cout << "Value using integer variable: " << num << std::endl;
+    std::cout << "Value using pointer: " << *ptr << std::endl;
+    std::cout << "Value using pointer to pointer: " << **ptr2 << std::endl;
+    return 0;
+}

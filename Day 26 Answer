@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class PriorityQueue {
+private:
+    vector<int> arr;
+
+public:
+    void push(int val) {
+        arr.push_back(val);
+        int i = arr.size() - 1;
+        while (i > 0 && arr[i] > arr[i - 1]) {
+            swap(arr[i], arr[i - 1]);
+            i--;
+        }
+    }
+
+    void pop() {
+        if (!arr.empty()) {
+            arr.erase(arr.begin());
+        }
+    }
+
+    int top() {
+        if (!arr.empty()) {
+            return arr[0];
+        }
+        return -1;
+    }
+
+    bool isEmpty() {
+        return arr.empty();
+    }
+
+    void display() {
+        for (int i = 0; i < arr.size(); i++) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    PriorityQueue pq;
+    
+    pq.push(10);
+    pq.push(5);
+    pq.push(30);
+    pq.push(20);
+    
+    pq.display();
+    cout << pq.top() << endl;
+    
+    pq.pop();
+    pq.display();
+    
+    cout << (pq.isEmpty() ? "Yes" : "No") << endl;
+    
+    return 0;
+}

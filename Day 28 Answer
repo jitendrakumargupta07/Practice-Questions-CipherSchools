@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Vehicle {
+protected:
+    string make;
+    int year;
+    float fuel;
+
+public:
+    Vehicle(string mk, int yr, float fl) : make(mk), year(yr), fuel(fl) {}
+
+    void refuel(float amount) {
+        fuel += amount;
+        cout << make << " refueled by " << amount << " units. Total fuel: " << fuel << endl;
+    }
+
+    virtual void display() {
+        cout << "Make: " << make << "\nYear: " << year << "\nFuel: " << fuel << endl;
+    }
+};
+
+class Car : public Vehicle {
+private:
+    int doors;
+
+public:
+    Car(string mk, int yr, float fl, int drs) : Vehicle(mk, yr, fl), doors(drs) {}
+
+    void display() override {
+        Vehicle::display();
+        cout << "Number of doors: " << doors << endl;
+    }
+
+    void openDoors() {
+        cout << "Doors are opened." << endl;
+    }
+};
+
+class Bike : public Vehicle {
+private:
+    bool hasCarrier;
+
+public:
+    Bike(string mk, int yr, float fl, bool carrier) : Vehicle(mk, yr, fl), hasCarrier(carrier) {}
+
+    void display() override {
+        Vehicle::display();
+        cout << "Has carrier: " << (hasCarrier ? "Yes" : "No") << endl;
+    }
+
+    void kickStart() {
+        cout << "Bike kick-started." << endl;
+    }
+};
+
+int main() {
+    Car myCar("Toyota", 2020, 10.5, 4);
+    Bike myBike("Yamaha", 2018, 5.0, true);
+
+    myCar.refuel(20);
+    myBike.refuel(10);
+
+    myCar.display();
+    myCar.openDoors();
+
+    myBike.display();
+    myBike.kickStart();
+
+    return 0;
+}

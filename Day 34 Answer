@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+
+ListNode* oddEvenList(ListNode* head) {
+    if (!head || !head->next) return head;
+
+    ListNode* odd = head;
+    ListNode* even = head->next;
+    ListNode* evenHead = even;
+
+    while (even && even->next) {
+        odd->next = odd->next->next;
+        even->next = even->next->next;
+
+        odd = odd->next;
+        even = even->next;
+    }
+
+    odd->next = evenHead;
+    return head;
+}
+
+void printList(ListNode* head) {
+    while (head) {
+        cout << head->val << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of elements in the linked list: ";
+    cin >> n;
+
+    if (n <= 0) {
+        cout << "Linked list cannot be created." << endl;
+        return 0;
+    }
+
+    ListNode* head = nullptr;
+    ListNode* tail = nullptr;
+
+    cout << "Enter the elements: ";
+    for (int i = 0; i < n; ++i) {
+        int val;
+        cin >> val;
+        ListNode* newNode = new ListNode(val);
+        if (!head) {
+            head = newNode;
+            tail = head;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    head = oddEvenList(head);
+
+    cout << "Reordered linked list: ";
+    printList(head);
+
+    return 0;
+}

@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void generateParentheses(int open, int close, string current, vector<string>& result) {
+    if (open == 0 && close == 0) {
+        result.push_back(current);
+        return;
+    }
+
+    if (open > 0) {
+        generateParentheses(open - 1, close, current + "(", result);
+    }
+
+    if (close > open) {
+        generateParentheses(open, close - 1, current + ")", result);
+    }
+}
+
+vector<string> generateParentheses(int n) {
+    vector<string> result;
+    generateParentheses(n, n, "", result);
+    return result;
+}
+
+int main() {
+    int n = 3;
+    vector<string> parentheses = generateParentheses(n);
+
+    cout << "All valid combinations of " << n << " pairs of parentheses:" << endl;
+    for (const string& combination : parentheses) {
+        cout << combination << endl;
+    }
+
+    return 0;
+}

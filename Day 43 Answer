@@ -1,0 +1,48 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdexcept>
+
+class NonIntegerDataException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "Error: Non-integer data found in the file.";
+    }
+};
+
+int main() {
+    std::string filePath;
+    std::cout << "Enter the file path: ";
+    std::cin >> filePath;
+
+    std::ifstream inputFile;
+    int sum = 0;
+    try {
+        inputFile.open(filePath);
+        if (!inputFile.is_open()) {
+            throw std::ios_base::failure("Error: Failed to open the file.");
+        }
+
+        try {
+            int number;
+            std::string word;
+            while (inputFile >> word) {
+                try {
+                    number = std::stoi(word);
+                    sum += number;
+                } catch (std::invalid_argument&) {
+                    throw NonIntegerDataException();
+                }
+            }
+            std::cout << "Sum of integers: " << sum << std::endl;
+        } catch (const NonIntegerDataException& e) {
+            std::cerr << e.what() << std::endl;
+        }
+
+    } catch (const std::ios_base::failure& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    inputFile.close();
+    return 0;
+}

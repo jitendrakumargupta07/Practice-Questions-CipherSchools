@@ -1,0 +1,73 @@
+ANSWER 1:
+
+#include <iostream>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+bool searchBinaryTree(TreeNode* root, int target) {
+    if (root == NULL) {
+        return false;
+    }
+    if (root->val == target) {
+        return true;
+    }
+    return searchBinaryTree(root->left, target) || searchBinaryTree(root->right, target);
+}
+
+int main() {
+    TreeNode* root = new TreeNode(10);
+    root->left = new TreeNode(5);
+    root->right = new TreeNode(15);
+    root->left->left = new TreeNode(3);
+    root->left->right = new TreeNode(7);
+    root->right->right = new TreeNode(18);
+
+    cout << (searchBinaryTree(root, 7) ? "true" : "false") << endl;
+    cout << (searchBinaryTree(root, 20) ? "true" : "false") << endl;
+
+    return 0;
+}
+
+
+ANSWER 2:
+
+#include <iostream>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+int findMinValue(TreeNode* root) {
+    while (root && root->left != NULL) {
+        root = root->left;
+    }
+    return root ? root->val : -1;
+}
+
+int main() {
+    TreeNode* root = new TreeNode(20);
+    root->left = new TreeNode(10);
+    root->right = new TreeNode(30);
+    root->left->left = new TreeNode(5);
+    root->left->right = new TreeNode(15);
+
+    cout << findMinValue(root) << endl;
+
+    TreeNode* root2 = new TreeNode(50);
+    root2->left = new TreeNode(40);
+    root2->left->left = new TreeNode(30);
+
+    cout << findMinValue(root2) << endl;
+
+    return 0;
+}

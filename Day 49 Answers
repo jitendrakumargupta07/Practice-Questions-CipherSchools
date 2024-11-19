@@ -1,0 +1,124 @@
+ANSWER 1:
+
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+using namespace std;
+
+bool compare(pair<int, int>& a, pair<int, int>& b) {
+    if (a.second == b.second)
+        return a.first < b.first;
+    return a.second < b.second;
+}
+
+vector<int> sortByFrequency(const vector<int>& vec) {
+    map<int, int> freq;
+    for (int num : vec) {
+        freq[num]++;
+    }
+
+    vector<pair<int, int>> freqVec(freq.begin(), freq.end());
+    sort(freqVec.begin(), freqVec.end(), compare);
+
+    vector<int> result;
+    for (auto& p : freqVec) {
+        result.insert(result.end(), p.second, p.first);
+    }
+
+    return result;
+}
+
+int main() {
+    vector<int> vec = {4, 5, 6, 5, 4, 3};
+    vector<int> result = sortByFrequency(vec);
+    for (int num : result) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    vec = {9, 9, 8, 7, 7, 7};
+    result = sortByFrequency(vec);
+    for (int num : result) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+
+ANSWER 2:
+
+#include <iostream>
+#include <set>
+#include <vector>
+using namespace std;
+
+void findUnionIntersection(const set<int>& set1, const set<int>& set2) {
+    set<int> unionSet, intersectionSet;
+    
+    set_union(set1.begin(), set1.end(), set2.begin(), set2.end(), inserter(unionSet, unionSet.begin()));
+    set_intersection(set1.begin(), set1.end(), set2.begin(), set2.end(), inserter(intersectionSet, intersectionSet.begin()));
+    
+    cout << "Union = {";
+    for (auto it = unionSet.begin(); it != unionSet.end(); ++it) {
+        cout << *it;
+        if (next(it) != unionSet.end()) cout << ", ";
+    }
+    cout << "}" << endl;
+
+    cout << "Intersection = {";
+    for (auto it = intersectionSet.begin(); it != intersectionSet.end(); ++it) {
+        cout << *it;
+        if (next(it) != intersectionSet.end()) cout << ", ";
+    }
+    cout << "}" << endl;
+}
+
+int main() {
+    set<int> set1 = {1, 2, 3};
+    set<int> set2 = {2, 3, 4};
+    findUnionIntersection(set1, set2);
+
+    set1 = {5, 6, 7};
+    set2 = {8, 9};
+    findUnionIntersection(set1, set2);
+
+    return 0;
+}
+
+
+ANSWER 3:
+
+#include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+vector<pair<string, int>> sortMapByValueDescending(const map<string, int>& inputMap) {
+    vector<pair<string, int>> sortedVec(inputMap.begin(), inputMap.end());
+    sort(sortedVec.begin(), sortedVec.end(), [](const pair<string, int>& a, const pair<string, int>& b) {
+        return a.second > b.second;
+    });
+    return sortedVec;
+}
+
+int main() {
+    map<string, int> inputMap = {{"Alice", 50}, {"Bob", 70}, {"Charlie", 60}};
+    vector<pair<string, int>> result = sortMapByValueDescending(inputMap);
+    for (auto& p : result) {
+        cout << "{" << p.first << ", " << p.second << "}, ";
+    }
+    cout << endl;
+
+    inputMap = {{"X", 100}, {"Y", 80}};
+    result = sortMapByValueDescending(inputMap);
+    for (auto& p : result) {
+        cout << "{" << p.first << ", " << p.second << "}, ";
+    }
+    cout << endl;
+
+    return 0;
+}

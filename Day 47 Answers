@@ -1,0 +1,77 @@
+QUESTION: Write a function that takes a vector and returns the index of the first occurrence of a target value. If the target does not exist, return -1.
+Input: vec = {1, 3, 5, 7, 9}, target = 7
+Output: 3
+
+Input: vec = {2, 4, 6, 8}, target = 10
+Output: -1
+
+
+ANSWER 1:
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int findTargetIndex(const vector<int>& vec, int target) {
+    for (int i = 0; i < vec.size(); ++i) {
+        if (vec[i] == target) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    vector<int> vec = {1, 3, 5, 7, 9};
+    int target = 7;
+    cout << findTargetIndex(vec, target) << endl;
+
+    vec = {2, 4, 6, 8};
+    target = 10;
+    cout << findTargetIndex(vec, target) << endl;
+
+    return 0;
+}
+
+
+
+QUESTION 2: Implement a program to rotate the elements of a vector by k positions to the right. Use STL algorithms.
+Input: vec = {1, 2, 3, 4, 5}, k = 2
+Output: {4, 5, 1, 2, 3}
+
+Input: vec = {10, 20, 30, 40}, k = 1
+Output: {40, 10, 20, 30}
+
+
+
+ANSWER 2:
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void rotateVector(vector<int>& vec, int k) {
+    k = k % vec.size();
+    rotate(vec.rbegin(), vec.rbegin() + k, vec.rend());
+}
+
+int main() {
+    vector<int> vec = {1, 2, 3, 4, 5};
+    int k = 2;
+    rotateVector(vec, k);
+    for (int val : vec) {
+        cout << val << " ";
+    }
+    cout << endl;
+
+    vec = {10, 20, 30, 40};
+    k = 1;
+    rotateVector(vec, k);
+    for (int val : vec) {
+        cout << val << " ";
+    }
+    cout << endl;
+
+    return 0;
+}

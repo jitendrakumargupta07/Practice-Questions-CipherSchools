@@ -1,0 +1,70 @@
+ANSWER 1
+
+#include <iostream>
+#include <set>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int N, ID;
+    cin >> N;
+    vector<int> items(N);
+    for (int i = 0; i < N; ++i) cin >> items[i];
+    cin >> ID;
+
+    set<int> uniqueItems(items.begin(), items.end());
+
+    for (int item : uniqueItems) cout << item << " ";
+    cout << endl;
+
+    vector<int> sortedItems(uniqueItems.begin(), uniqueItems.end());
+    for (int item : sortedItems) cout << item << " ";
+    cout << endl;
+
+    if (uniqueItems.find(ID) != uniqueItems.end())
+        cout << "Available" << endl;
+    else
+        cout << "Not Available" << endl;
+
+    cout << uniqueItems.size() << endl;
+
+    return 0;
+}
+
+
+ANSWER 2
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+using namespace std;
+
+int main() {
+    int N, Y;
+    cin >> N;
+    vector<int> numbers(N);
+    for (int i = 0; i < N; ++i) cin >> numbers[i];
+    cin >> Y;
+
+    int evenCount = count_if(numbers.begin(), numbers.end(), [](int num) { return num % 2 == 0; });
+    int oddCount = N - evenCount;
+
+    cout << evenCount << endl;
+    cout << oddCount << endl;
+
+    long long product = accumulate(numbers.begin(), numbers.end(), 1LL, multiplies<long long>());
+    cout << product << endl;
+
+    if (find(numbers.begin(), numbers.end(), Y) != numbers.end())
+        cout << "Found" << endl;
+    else
+        cout << "Not Found" << endl;
+
+    sort(numbers.rbegin(), numbers.rend());
+    for (int num : numbers) cout << num << " ";
+    cout << endl;
+
+    return 0;
+}

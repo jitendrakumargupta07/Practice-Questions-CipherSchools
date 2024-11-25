@@ -1,0 +1,116 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    int height;
+};
+
+int height(Node* node) {
+    return node ? node->height : 0;
+}
+
+Node* createNode(int data) {
+    Node* newNode = new Node();
+    newNode->data = data;
+    newNode->left = nullptr;
+    newNode->right = nullptr;
+    newNode->height = 1;
+    return newNode;
+}
+
+int getBalance(Node* node) {
+    return node ? height(node->left) - height(node->right) : 0;
+}
+
+Node* rotateRight(Node* y) {
+    Node* x = y->left;
+    Node* T2 = x->right;
+
+    x->right = y;
+    y->left = T2;
+
+    y->height = max(height(y->left), height(y->right)) + 1;
+    x->height = max(height(x->left), height(x->right)) + 1;
+
+    return x;
+}
+
+Node* rotateLeft(Node* x) {
+    Node* y = x->right;
+    Node* T2 = y->left;
+
+    y->left = x;
+    x->right = T2;
+
+    x->height = max(height(x->left), height(x->right)) + 1;
+    y->height = max(height(y->left), height(y->right)) + 1;
+
+    return y;
+}
+
+Node* insert(Node* node, int data) {
+    if (!node) return createNode(data);
+
+    if (data < node->data)
+        node->left = insert(node->left, data);
+    else if (data > node->data)
+        node->right = insert(node->right, data);
+    else
+        return node;
+
+    node->height = max(height(node->left), height(node->right)) + 1;
+
+    int balance = getBalance(node);
+
+    if (balance > 1 && data < node->left->data)
+        return rotateRight(node);
+
+    if (balance < -1 && data > node->right->data)
+        return rotateLeft(node);
+
+    if (balance > 1 && data > node->left->data) {
+        node->left = rotateLeft(node->left);
+        return rotateRight(node);
+    }
+
+    if (balance < -1 && data < node->right->data) {
+        node->right = rotateRight(node->right);
+        return rotateLeft(node);
+    }
+
+    return node;
+}
+
+void preOrder(Node* root) {
+    if (root) {
+        cout << "Value: " << root->data 
+             << ", Height: " << root->height 
+             << ", Balance Factor: " << getBalance(root) << endl;
+        preOrder(root->left);
+        preOrder(root->right);
+    }
+}
+
+int main() {
+    Node* root = nullptr;
+    int N, value;
+
+    cout << "Enter number of elements to insert: ";
+    cin >> N;
+
+    cout << "Enter elements: ";
+    for (int i = 0; i < N; ++i) {
+        cin >> value;
+        root = insert(root, value);
+    }
+
+    cout << "Pre-order traversal with height and balance factor of each node:\n";
+    preOrder(root);
+
+    cout << "Height of the AVL tree: " << height(root) << endl;
+
+    return 0;
+}

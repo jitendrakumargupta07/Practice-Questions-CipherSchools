@@ -1,0 +1,86 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    int height;
+    Node(int val) : data(val), left(nullptr), right(nullptr), height(1) {}
+};
+
+int height(Node* node) {
+    return node ? node->height : 0;
+}
+
+Node* rotateRight(Node* y) {
+    Node* x = y->left;
+    y->left = x->right;
+    x->right = y;
+    y->height = max(height(y->left), height(y->right)) + 1;
+    x->height = max(height(x->left), height(x->right)) + 1;
+    return x;
+}
+
+Node* rotateLeft(Node* x) {
+    Node* y = x->right;
+    x->right = y->left;
+    y->left = x;
+    x->height = max(height(x->left), height(x->right)) + 1;
+    y->height = max(height(y->left), height(y->right)) + 1;
+    return y;
+}
+
+Node* insert(Node* node, int val) {
+    if (!node) return new Node(val);
+    if (val < node->data) node->left = insert(node->left, val);
+    else if (val > node->data) node->right = insert(node->right, val);
+
+    node->height = max(height(node->left), height(node->right)) + 1;
+
+    int balance = height(node->left) - height(node->right);
+    if (balance > 1 && val < node->left->data) return rotateRight(node);
+    if (balance < -1 && val > node->right->data) return rotateLeft(node);
+    if (balance > 1 && val > node->left->data) {
+        node->left = rotateLeft(node->left);
+        return rotateRight(node);
+    }
+    if (balance < -1 && val < node->right->data) {
+        node->right = rotateRight(node->right);
+        return rotateLeft(node);
+    }
+    return node;
+}
+
+void rangeSearch(Node* root, int L, int R, vector<int>& result) {
+    if (!root) return;
+    if (root->data >= L) rangeSearch(root->left, L, R, result);
+    if (root->data >= L && root->data <= R) result.push_back(root->data);
+    if (root->data <= R) rangeSearch(root->right, L, R, result);
+}
+
+int main() {
+    Node* root = nullptr;
+    int N, L, R, val;
+    cout << "Enter number of elements: ";
+    cin >> N;
+
+    cout << "Enter elements: ";
+    for (int i = 0; i < N; ++i) {
+        cin >> val;
+        root = insert(root, val);
+    }
+
+    cout << "Enter range [L, R]: ";
+    cin >> L >> R;
+
+    vector<int> result;
+    rangeSearch(root, L, R, result);
+
+    cout << "Elements in range [" << L << ", " << R << "]: ";
+    for (int x : result) cout << x << " ";
+    cout << endl;
+
+    return 0;
+}

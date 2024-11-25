@@ -1,0 +1,85 @@
+ANSWER 1
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+using namespace std;
+
+int main() {
+    int N, P;
+    cin >> N;
+    vector<int> prices(N);
+    for (int i = 0; i < N; ++i) cin >> prices[i];
+    cin >> P;
+
+    bool found = false;
+    for (int price : prices) {
+        if (price == P) {
+            found = true;
+            break;
+        }
+    }
+    cout << (found ? "Found" : "Not Found") << endl;
+
+    sort(prices.begin(), prices.end(), [](int a, int b) { return a < b; });
+    for (int price : prices) cout << price << " ";
+    cout << endl;
+
+    int totalCost = 0;
+    for (int price : prices) totalCost += price;
+    cout << totalCost << endl;
+
+    int maxPrice = prices[0], minPrice = prices[0];
+    for (int price : prices) {
+        if (price > maxPrice) maxPrice = price;
+        if (price < minPrice) minPrice = price;
+    }
+    cout << maxPrice << endl;
+    cout << minPrice << endl;
+
+    return 0;
+}
+
+
+ANSWER 2
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <map>
+#include <cmath>
+using namespace std;
+
+int main() {
+    int N, X;
+    cin >> N;
+    vector<int> scores(N);
+    map<int, int> scoreCount;
+    for (int i = 0; i < N; ++i) {
+        cin >> scores[i];
+        scoreCount[scores[i]]++;
+    }
+    cin >> X;
+
+    cout << scoreCount[X] << endl;
+
+    priority_queue<int> pq;
+    for (int score : scores) pq.push(score);
+    vector<int> sortedScores;
+    while (!pq.empty()) {
+        sortedScores.push_back(pq.top());
+        pq.pop();
+    }
+    for (int score : sortedScores) cout << score << " ";
+    cout << endl;
+
+    int totalScore = 0;
+    for (int score : scores) totalScore += score;
+    cout << round(static_cast<double>(totalScore) / N) << endl;
+
+    cout << sortedScores.front() << endl;
+    cout << sortedScores.back() << endl;
+
+    return 0;
+}
